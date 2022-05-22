@@ -1,6 +1,3 @@
-export interface NewAdEntity extends Omit<AdEntity, 'id'> {
-    id?: string;
-}
 
 
 export interface SimpleAddEntity {
@@ -21,6 +18,9 @@ export interface AdEntity extends SimpleAddEntity {
 
 }
 
+export interface NewAdEntity extends Omit<AdEntity, 'id'> {
+    id?: string;
+}
 
 
 

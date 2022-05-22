@@ -9,15 +9,17 @@ const id: string = uuid();
 
 type AdRecordsResults = [AdEntity[], FieldPacket[]];
 
-export class AdRecord implements AdEntity {
+export class AdRecord implements NewAdEntity {
 
-    public id: string;
+
     public name: string;
     public description: string;
     public price: number;
     public url: string;
     public lat: number;
     public lon: number;
+    public id: string
+
 
     constructor(obj: NewAdEntity) {
         if (!obj.name || obj.name.length > 100) {
@@ -35,13 +37,14 @@ export class AdRecord implements AdEntity {
         if (typeof obj.lat !== 'number' || typeof obj.lon !== 'number') {
             throw new ValidationError("Your offer can not be localized")
         }
-        this.id = obj.id
-        this.name = obj.name
-        this.description = obj.description
-        this.price = obj.price
-        this.url = obj.url
-        this.lat = obj.lat
-        this.lon = obj.lon
+
+        this.id = obj.id;
+        this.name = obj.name;
+        this.description = obj.description;
+        this.price = obj.price;
+        this.url = obj.url;
+        this.lat = obj.lat;
+        this.lon = obj.lon;
 
     }
 
@@ -53,16 +56,13 @@ export class AdRecord implements AdEntity {
     }
 
 
-    static async addOne(name: string, description: string, price: number, url: string, lat: number, lon: number) {
-        await pool.execute("INSERT INTO `ads` (id,name,description,price,url,lat,lon) VALUES(:id,:name,:description,:price,:url,:lat,:lon)", {
-            id: uuid(),
-            name,
-            description,
-            price,
-            url,
-            lat,
-            lon
-        })
+    async insertOne(): Promise<string> {
+        if (!this.id) {
+            this.id = uuid()
+        } else {
+            throw new ValidationError("Can not insert on existing element!")
+        }
+        await pool.execute("INSERT INTO `ads` (id,name,description,price,url,lat,lon) VALUES(:id,:name,:description,:price,:url,:lat,:lon)", this)
         return id
     }
 
@@ -76,4 +76,5 @@ export class AdRecord implements AdEntity {
         })
 
     }
+
 }
