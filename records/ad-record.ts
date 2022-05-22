@@ -2,6 +2,9 @@ import {AdEntity, NewAdEntity} from "../types";
 import {ValidationError} from "../utils/errors";
 import {pool} from "../utils/db";
 import {FieldPacket} from "mysql2";
+import {v4 as uuid} from "uuid";
+
+const id: string = uuid();
 
 
 type AdRecordsResults = [AdEntity[], FieldPacket[]];
@@ -47,6 +50,20 @@ export class AdRecord implements AdEntity {
             id,
         }) as AdRecordsResults;
         return results.length === 0 ? null : new AdRecord(results[0]);
+    }
+
+
+    static async addOne(name: string, description: string, price: number, url: string, lat: number, lon: number) {
+        await pool.execute("INSERT INTO `ads` (id,name,description,price,url,lat,lon) VALUES(:id,:name,:description,:price,:url,:lat,:lon)", {
+            id: uuid(),
+            name,
+            description,
+            price,
+            url,
+            lat,
+            lon
+        })
+        return id
     }
 
 }
