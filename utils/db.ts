@@ -6,6 +6,7 @@ export const pool = createPool({
     user: 'root',
     password: 'root',
     database: 'notice-board',
+    port: 8889,
     namedPlaceholders: true,
     decimalNumbers: true,
 })
