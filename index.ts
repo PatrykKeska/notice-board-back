@@ -5,6 +5,7 @@ import {handleError, ValidationError} from "./utils/errors";
 
 const app = express();
 import rateLimit from 'express-rate-limit'
+import {addRouter} from "./routers/ad.router";
 
 
 app.use(cors({
@@ -15,9 +16,8 @@ app.use(rateLimit({
     windowMs: 5 * 60 * 1000, // 5 minutes
     max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
 }))
-app.get('/', async (req, res) => {
-    throw new ValidationError("No way bro!");
-})
+app.use('/add',addRouter)
+
 app.use(handleError);
 app.listen(3001, '0.0.0.0', () => console.log('http://localhost:3001'));
 
