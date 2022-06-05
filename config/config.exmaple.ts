@@ -4,5 +4,6 @@ export const config = {
     dbPassword: '',
     dbDatabase: '',
     dbPort: 8889,
+    corsOrigin : "http://localhost:3000"
 
 };

@@ -6,10 +6,11 @@ import {handleError, ValidationError} from "./utils/errors";
 const app = express();
 import rateLimit from 'express-rate-limit'
 import {addRouter} from "./routers/ad.router";
+import {config} from "./config/config";
 
 
 app.use(cors({
-    origin: "http://localhost:3000"
+    origin: config.corsOrigin
 }));
 app.use(json());
 app.use(rateLimit({
