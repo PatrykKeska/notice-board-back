@@ -6,7 +6,7 @@
   "scripts": {
     "start": "yarn ts-node index.ts",
     "start:dev": "yarn tsnd index.ts",
-    "build": "yarn tsc",
+    "build": "tsc",
     "test": "jest"
   },
   "author": "Patryk Keska, deasigned by Jakub Krol on MegaK ",
